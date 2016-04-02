@@ -1,6 +1,16 @@
 package generator
 
-import "bytes"
+import (
+	"time"
+	"math/rand"
+)
+
+var (
+	LETTERS = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	NUMBERS = []rune("0123456789")
+	SPECIAL = []rune("!@#$%&;,.")
+	ALL = append(append(LETTERS, NUMBERS...), SPECIAL...)
+)
 
 type passwordGenerator struct {
 
@@ -15,9 +25,19 @@ func New() *passwordGenerator {
 }
 
 func (p *passwordGenerator) GeneratePassword(length int) (string) {
-	buffer := bytes.NewBufferString("")
-	for i := 0; i < length; i++ {
-		buffer.WriteString("a")
+	rand.Seed(time.Now().UnixNano())
+	b := make([]rune, length)
+	pos := 0
+	for i := range b {
+		pos++
+		b[i] = random(pos)
 	}
-	return buffer.String()
+	return string(b)
+}
+
+func random(pos int) rune {
+	if pos == 1 {
+		return LETTERS[rand.Intn(len(LETTERS))]
+	}
+	return ALL[rand.Intn(len(ALL))]
 }

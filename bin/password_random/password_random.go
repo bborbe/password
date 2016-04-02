@@ -2,19 +2,20 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io"
 	"os"
+
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
-	"fmt"
 )
 
 var logger = log.DefaultLogger
 
 const (
-	DEFAULT_PASSWORD_LENGTH = 16
+	DEFAULT_PASSWORD_LENGTH   = 16
 	PARAMETER_PASSWORD_LENGTH = "length"
-	PARAMETER_LOGLEVEL = "loglevel"
+	PARAMETER_LOGLEVEL        = "loglevel"
 )
 
 func main() {

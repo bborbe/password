@@ -1,17 +1,18 @@
 package handler
 
 import (
-	"net/http"
-	password_generator "github.com/bborbe/password/generator"
-	"github.com/bborbe/log"
 	"fmt"
+	"net/http"
 	"strconv"
+
+	"github.com/bborbe/log"
+	password_generator "github.com/bborbe/password/generator"
 )
 
 var logger = log.DefaultLogger
 
 const (
-	DEFAULT_LENGTH = 16
+	DEFAULT_LENGTH   = 16
 	PARAMETER_LENGTH = "length"
 )
 
@@ -29,7 +30,7 @@ func (s *statusHandler) ServeHTTP(responseWriter http.ResponseWriter, request *h
 	length := parseLength(request.FormValue(PARAMETER_LENGTH))
 	logger.Debugf("generate password with length %d", length)
 	password := s.passwordGenerator.GeneratePassword(length)
-	fmt.Fprintf(responseWriter, password)
+	fmt.Fprint(responseWriter, password)
 }
 
 func parseLength(lengthString string) int {

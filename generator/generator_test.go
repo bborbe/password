@@ -14,3 +14,18 @@ func TestImplementsPasswordGenerator(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestGenerate(t *testing.T) {
+	b := New()
+	for i := 0; i < 32; i++ {
+		if err := AssertThat(len(b.GeneratePassword(i)), Is(i)); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+func TestGenerateMaxLength(t *testing.T) {
+	b := New()
+	if err := AssertThat(len(b.GeneratePassword(MAX_LENGTH*2)), Is(MAX_LENGTH)); err != nil {
+		t.Fatal(err)
+	}
+}

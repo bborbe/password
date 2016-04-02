@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"bytes"
+
 	password_generator "github.com/bborbe/password/generator"
 
 	. "github.com/bborbe/assert"
@@ -39,7 +40,7 @@ func TestResumeSuccess(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = AssertThat(len(writer.String()), Is(length + 1))
+	err = AssertThat(len(writer.String()), Is(length+1))
 	if err != nil {
 		t.Fatal(err)
 	}

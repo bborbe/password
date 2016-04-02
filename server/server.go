@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/bborbe/server"
 	"github.com/bborbe/password/generator"
-"github.com/bborbe/password/handler"
+	"github.com/bborbe/password/handler"
+	"github.com/bborbe/server"
 )
 
 func NewServer(port int, passwordGenerator generator.PasswordGenerator) server.Server {

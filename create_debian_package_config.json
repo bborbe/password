@@ -1,0 +1,19 @@
+{
+  "name": "password",
+  "section": "utils",
+  "priority": "optional",
+  "architecture": "amd64",
+  "maintainer": "Benjamin Borbe <bborbe@rocketnews.de>",
+  "description": "Password Generator",
+  "postinst": "src/github.com/bborbe/password/postinst",
+  "files": [
+    {
+      "source": "bin/password_random",
+      "target": "/opt/password/bin/password_random"
+    },
+    {
+      "source": "bin/password_server",
+      "target": "/opt/password/bin/password_server"
+    }
+  ]
+}

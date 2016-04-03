@@ -23,6 +23,7 @@ func main() {
 	logger.SetLevelThreshold(log.LogStringToLevel(*logLevelPtr))
 	logger.Tracef("set log level to %s", *logLevelPtr)
 	passwordGenerator := password_generator.New()
+	logger.Infof("listen on port %d", *portPtr)
 	srv := password_server.NewServer(*portPtr, passwordGenerator)
 	srv.Run()
 }

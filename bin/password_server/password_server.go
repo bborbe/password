@@ -5,25 +5,42 @@ import (
 
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
-	password_server "github.com/bborbe/password/server"
+	"os"
+	"github.com/facebookgo/grace/gracehttp"
+	"net/http"
+	"github.com/bborbe/password/handler"
+	"fmt"
 )
 
 var logger = log.DefaultLogger
 
 const (
-	DEFAULT_PORT       int = 8080
-	PARAMETER_LOGLEVEL     = "loglevel"
-	PARAMETER_PORT         = "port"
+	DEFAULT_PORT int = 8080
+	PARAMETER_LOGLEVEL = "loglevel"
+	PARAMETER_PORT = "port"
+)
+
+var (
+	logLevelPtr = flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, "one of OFF,TRACE,DEBUG,INFO,WARN,ERROR")
+	portPtr = flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
 )
 
 func main() {
-	logLevelPtr := flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, "one of OFF,TRACE,DEBUG,INFO,WARN,ERROR")
-	portPtr := flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
 	flag.Parse()
+
 	logger.SetLevelThreshold(log.LogStringToLevel(*logLevelPtr))
-	logger.Tracef("set log level to %s", *logLevelPtr)
+	logger.Debugf("set log level to %s", *logLevelPtr)
+
+	server, err := createServer(*portPtr)
+	if err != nil {
+		logger.Error(err)
+		os.Exit(1)
+	}
+	gracehttp.Serve(server)
+}
+
+func createServer(port int) (*http.Server, error) {
 	passwordGenerator := password_generator.New()
-	logger.Infof("listen on port %d", *portPtr)
-	srv := password_server.NewServer(*portPtr, passwordGenerator)
-	srv.Run()
+	h := handler.New(passwordGenerator)
+	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: h}, nil
 }

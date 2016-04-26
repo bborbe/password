@@ -3,26 +3,27 @@ package main
 import (
 	"flag"
 
+	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
-	"os"
-	"github.com/facebookgo/grace/gracehttp"
-	"net/http"
 	"github.com/bborbe/password/handler"
-	"fmt"
+	"github.com/facebookgo/grace/gracehttp"
 )
 
 var logger = log.DefaultLogger
 
 const (
-	DEFAULT_PORT int = 8080
-	PARAMETER_LOGLEVEL = "loglevel"
-	PARAMETER_PORT = "port"
+	DEFAULT_PORT       int = 8080
+	PARAMETER_LOGLEVEL     = "loglevel"
+	PARAMETER_PORT         = "port"
 )
 
 var (
 	logLevelPtr = flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, "one of OFF,TRACE,DEBUG,INFO,WARN,ERROR")
-	portPtr = flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
+	portPtr     = flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
 )
 
 func main() {

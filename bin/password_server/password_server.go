@@ -1,12 +1,11 @@
 package main
 
 import (
-	"flag"
-
 	"fmt"
 	"net/http"
 	"os"
 
+	flag "github.com/bborbe/flagenv"
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
 	"github.com/bborbe/password/handler"

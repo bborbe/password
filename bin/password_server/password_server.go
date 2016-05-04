@@ -40,6 +40,9 @@ func main() {
 }
 
 func createServer(port int) (*http.Server, error) {
+	if port <= 0 {
+		return nil, fmt.Errorf("parameter %s invalid", PARAMETER_PORT)
+	}
 	passwordGenerator := password_generator.New()
 	h := handler.New(passwordGenerator)
 	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: h}, nil

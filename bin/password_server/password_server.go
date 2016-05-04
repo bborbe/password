@@ -26,6 +26,7 @@ var (
 )
 
 func main() {
+	defer logger.Close()
 	flag.Parse()
 
 	logger.SetLevelThreshold(log.LogStringToLevel(*logLevelPtr))
@@ -33,9 +34,11 @@ func main() {
 
 	server, err := createServer(*portPtr)
 	if err != nil {
-		logger.Error(err)
+		logger.Fatal(err)
+		logger.Close()
 		os.Exit(1)
 	}
+	logger.Debugf("start server")
 	gracehttp.Serve(server)
 }
 

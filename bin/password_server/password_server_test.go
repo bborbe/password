@@ -22,4 +22,3 @@ func TestServerSuccess(t *testing.T) {
 		t.Fatal(err)
 	}
 }
-

@@ -8,9 +8,8 @@ import (
 
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
+	"runtime"
 )
-
-var logger = log.DefaultLogger
 
 const (
 	DEFAULT_PASSWORD_LENGTH   = 16
@@ -18,13 +17,20 @@ const (
 	PARAMETER_LOGLEVEL        = "loglevel"
 )
 
+var (
+	logger            = log.DefaultLogger
+	logLevelPtr       = flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, "one of OFF,TRACE,DEBUG,INFO,WARN,ERROR")
+	passwordLengthPtr = flag.Int(PARAMETER_PASSWORD_LENGTH, DEFAULT_PASSWORD_LENGTH, "string")
+)
+
 func main() {
 	defer logger.Close()
-	logLevelPtr := flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, "one of OFF,TRACE,DEBUG,INFO,WARN,ERROR")
-	passwordLengthPtr := flag.Int(PARAMETER_PASSWORD_LENGTH, DEFAULT_PASSWORD_LENGTH, "string")
 	flag.Parse()
+
 	logger.SetLevelThreshold(log.LogStringToLevel(*logLevelPtr))
 	logger.Debugf("set log level to %s", *logLevelPtr)
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	writer := os.Stdout
 	passwordGenerator := password_generator.New()

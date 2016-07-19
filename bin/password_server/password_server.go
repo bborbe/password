@@ -10,6 +10,7 @@ import (
 	password_generator "github.com/bborbe/password/generator"
 	"github.com/bborbe/password/handler"
 	"github.com/facebookgo/grace/gracehttp"
+	"runtime"
 )
 
 var logger = log.DefaultLogger
@@ -31,6 +32,8 @@ func main() {
 
 	logger.SetLevelThreshold(log.LogStringToLevel(*logLevelPtr))
 	logger.Debugf("set log level to %s", *logLevelPtr)
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	server, err := createServer(*portPtr)
 	if err != nil {

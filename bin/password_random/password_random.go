@@ -6,9 +6,10 @@ import (
 	"io"
 	"os"
 
+	"runtime"
+
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
-	"runtime"
 )
 
 const (

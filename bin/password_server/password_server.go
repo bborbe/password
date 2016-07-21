@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"os"
 
+	"runtime"
+
 	flag "github.com/bborbe/flagenv"
 	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
 	"github.com/bborbe/password/handler"
 	"github.com/facebookgo/grace/gracehttp"
-	"runtime"
 )
 
 var logger = log.DefaultLogger

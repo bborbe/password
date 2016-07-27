@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	debug_handler "github.com/bborbe/http_handler/debug"
 	"runtime"
 
 	flag "github.com/bborbe/flagenv"
@@ -18,13 +19,15 @@ var logger = log.DefaultLogger
 
 const (
 	DEFAULT_PORT       int = 8080
-	PARAMETER_LOGLEVEL     = "loglevel"
 	PARAMETER_PORT         = "port"
+	PARAMETER_LOGLEVEL     = "loglevel"
+	PARAMETER_DEBUG        = "debug"
 )
 
 var (
 	logLevelPtr = flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, "one of OFF,TRACE,DEBUG,INFO,WARN,ERROR")
 	portPtr     = flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
+	debugPtr    = flag.Bool(PARAMETER_DEBUG, false, "debug")
 )
 
 func main() {
@@ -36,7 +39,10 @@ func main() {
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	server, err := createServer(*portPtr)
+	server, err := createServer(
+		*portPtr,
+		*debugPtr,
+	)
 	if err != nil {
 		logger.Fatal(err)
 		logger.Close()
@@ -46,11 +52,19 @@ func main() {
 	gracehttp.Serve(server)
 }
 
-func createServer(port int) (*http.Server, error) {
+func createServer(
+	port int,
+	debug bool,
+) (*http.Server, error) {
 	if port <= 0 {
 		return nil, fmt.Errorf("parameter %s invalid", PARAMETER_PORT)
 	}
 	passwordGenerator := password_generator.New()
-	h := handler.New(passwordGenerator)
-	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: h}, nil
+	handler := handler.New(passwordGenerator)
+
+	if debug {
+		handler = debug_handler.New(handler)
+	}
+
+	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: handler}, nil
 }

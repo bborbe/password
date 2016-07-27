@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	debug_handler "github.com/bborbe/http_handler/debug"
 	"runtime"
+
+	debug_handler "github.com/bborbe/http_handler/debug"
 
 	flag "github.com/bborbe/flagenv"
 	"github.com/bborbe/log"

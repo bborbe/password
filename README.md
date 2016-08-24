@@ -6,6 +6,22 @@
 
 `go get github.com/bborbe/password/bin/password_server`
 
+## Run
+
+Commandline
+
+```
+password_random \
+-length=32
+```
+
+Server
+
+```
+password_server \
+-port 8080
+```
+
 ## Continuous integration
 
 [Jenkins](https://www.benjamin-borbe.de/jenkins/job/Go-Password/)

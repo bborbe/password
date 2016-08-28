@@ -5,11 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bborbe/log"
 	password_generator "github.com/bborbe/password/generator"
+	"github.com/golang/glog"
 )
-
-var logger = log.DefaultLogger
 
 const (
 	DEFAULT_LENGTH   = 16
@@ -28,7 +26,7 @@ func New(passwordGenerator password_generator.PasswordGenerator) http.Handler {
 
 func (s *statusHandler) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
 	length := parseLength(request.FormValue(PARAMETER_LENGTH))
-	logger.Debugf("generate password with length %d", length)
+	glog.V(2).Infof("generate password with length %d", length)
 	password := s.passwordGenerator.GeneratePassword(length)
 	fmt.Fprint(responseWriter, password)
 }

@@ -7,7 +7,7 @@
 case "$1" in
 	start)
 		echo "Starting password_server"
-		/opt/password/bin/password_server -loglevel=ERROR -port=7777 -rootdir=/rsync > /var/log/password_server.log &
+		/opt/password/bin/password_server -logtostderr -v=2 -port=7777 -rootdir=/rsync > /var/log/password_server.log &
 	;;
 	stop)
 		echo "Stopping password_server"

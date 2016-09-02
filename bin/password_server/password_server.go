@@ -15,14 +15,12 @@ import (
 )
 
 const (
-	DEFAULT_PORT    int = 8080
-	PARAMETER_PORT      = "port"
-	PARAMETER_DEBUG     = "debug"
+	DEFAULT_PORT   int = 8080
+	PARAMETER_PORT     = "port"
 )
 
 var (
-	portPtr  = flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
-	debugPtr = flag.Bool(PARAMETER_DEBUG, false, "debug")
+	portPtr = flag.Int(PARAMETER_PORT, DEFAULT_PORT, "port")
 )
 
 func main() {
@@ -33,7 +31,6 @@ func main() {
 
 	err := do(
 		*portPtr,
-		*debugPtr,
 	)
 	if err != nil {
 		glog.Exit(err)
@@ -42,11 +39,9 @@ func main() {
 
 func do(
 	port int,
-	debug bool,
 ) error {
 	server, err := createServer(
 		port,
-		debug,
 	)
 	if err != nil {
 		return err
@@ -57,7 +52,6 @@ func do(
 
 func createServer(
 	port int,
-	debug bool,
 ) (*http.Server, error) {
 	if port <= 0 {
 		return nil, fmt.Errorf("parameter %s invalid", PARAMETER_PORT)
@@ -65,7 +59,7 @@ func createServer(
 	passwordGenerator := password_generator.New()
 	handler := handler.New(passwordGenerator)
 
-	if debug {
+	if glog.V(4) {
 		handler = debug_handler.New(handler)
 	}
 

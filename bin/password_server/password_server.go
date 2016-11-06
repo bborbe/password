@@ -10,9 +10,9 @@ import (
 	flag "github.com/bborbe/flagenv"
 	password_generator "github.com/bborbe/password/generator"
 	"github.com/bborbe/password/handler"
+	"github.com/bborbe/password/model"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/golang/glog"
-	"github.com/bborbe/password/model"
 )
 
 const (
@@ -30,14 +30,13 @@ func main() {
 	flag.Parse()
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-
-	if err := do(	);err != nil {
+	if err := do(); err != nil {
 		glog.Exit(err)
 	}
 }
 
-func do( ) error {
-	server, err := createServer(	)
+func do() error {
+	server, err := createServer()
 	if err != nil {
 		return err
 	}

@@ -24,7 +24,7 @@ password_server \
 
 ## Continuous integration
 
-[Jenkins](https://www.benjamin-borbe.de/jenkins/job/Go-Password/)
+[Jenkins](https://jenkins.benjamin-borbe.de/job/Go-Password/)
 
 ## Copyright and license
 

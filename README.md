@@ -1,21 +1,24 @@
 # Password
 
-## Install
+Simple http server for random passwords.
 
-`go get github.com/bborbe/password/cmd/password-random`
+## Command line
 
-`go get github.com/bborbe/password/cmd/password-server`
-
-## Run
-
-Commandline
+```
+go get github.com/bborbe/password/cmd/password-random
+```
 
 ```
 password-random \
 -length=32
 ```
 
-Server
+
+## HTTP Server
+
+```
+go get github.com/bborbe/password/cmd/password-server
+```
 
 ```
 password-server \
